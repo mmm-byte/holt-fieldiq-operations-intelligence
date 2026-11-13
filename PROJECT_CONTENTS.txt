@@ -1,24 +1,19 @@
-.github/workflows/quality.yml
-.gitignore
-README.md
-app/globals.css
-app/layout.tsx
-app/page.tsx
-next-env.d.ts
-next.config.mjs
-package.json
-powerbi/measures.dax
-powerbi/model-spec.md
-powerbi/rls-pattern.md
-public/data/operations.json
-requirements.txt
-scripts/build_pipeline.py
-tests/test_pipeline.py
-tsconfig.json
-warehouse/sql/marts/dim_branch.sql
-warehouse/sql/marts/dim_equipment.sql
-warehouse/sql/marts/fact_parts_order.sql
-warehouse/sql/marts/fact_rental_contract.sql
-warehouse/sql/marts/fact_work_order.sql
-warehouse/sql/staging/stg_work_orders.sql
-warehouse/tests/assertions.sql
+FIELDIQ v4.1 — COMPLETE PROJECT CONTENTS
+
+app/                    Next.js application, Operations Playbook, Decision Studio, responsive UI and metadata
+public/data/            Committed synthetic snapshot used by Vercel
+scripts/                Deterministic Python Bronze/Silver/Gold pipeline
+data/bronze/            Source-shaped synthetic CSV extracts
+data/silver/            Standardized synthetic entities
+data/gold/              Seven dimensional Gold tables, including fact_fleet_day
+warehouse/sql/          PostgreSQL-style staging and dimensional SQL examples
+warehouse/tests/        SQL data-quality assertion examples
+powerbi/                Semantic model specification, DAX measures, RLS design
+fabric/                 Fabric Lakehouse guide and PySpark notebook starter
+tests/                  Python pipeline tests
+.github/workflows/      GitHub Actions quality and build workflow
+README.md               Product walkthrough, architecture, metrics, limitations, setup
+package.json            Next.js dependencies and scripts
+requirements.txt        Python dependencies
+
+All business records are synthetic. Fabric, Power BI, RLS, and AI integrations are not deployed.

@@ -1,9 +1,13 @@
--- Grain: one row per rental contract (not per contract-day).
+-- Grain: one row per rental contract (not one row per contract-day).
 select
-  contract_id,
-  equipment_id,
-  cast(start_date as date) as start_date,
-  rental_days,
-  daily_rate,
-  cast(rental_days as decimal(18,2)) * daily_rate as modeled_rental_revenue
-from silver_rental_contracts
+  r.contract_id,
+  e.equipment_key,
+  b.branch_key,
+  cast(to_char(cast(r.start_date as date), 'YYYYMMDD') as integer) as start_date_key,
+  cast(r.start_date as date) as start_date,
+  r.rental_days,
+  r.daily_rate,
+  cast(r.rental_days as decimal(18,2)) * r.daily_rate as modeled_rental_revenue
+from silver_rental_contracts r
+left join dim_equipment e on r.equipment_id = e.equipment_id
+left join dim_branch b on r.branch = b.branch_name;

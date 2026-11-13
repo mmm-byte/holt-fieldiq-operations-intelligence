@@ -1,6 +1,6 @@
-branch,region
-San Antonio,Texas
-Austin,Texas
-Dallas,Texas
-Fort Worth,Texas
-Waco,Texas
+branch_key,branch_name,region
+1,Austin,Texas
+2,Dallas,Texas
+3,Fort Worth,Texas
+4,San Antonio,Texas
+5,Waco,Texas

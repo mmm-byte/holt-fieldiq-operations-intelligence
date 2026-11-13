@@ -1,20 +1,28 @@
--- FIELDIQ semantic measure starter. Assumes the relationships in model-spec.md.
+-- FIELDIQ reusable measure starters. Align relationships and table names before publishing.
+-- These measures have not been deployed or performance-tested in a Power BI model.
+
 Service Revenue :=
 CALCULATE(
-    SUM(fact_work_order[labor_revenue]) + SUM(fact_work_order[parts_revenue]),
-    fact_work_order[work_order_status] = "Closed"
+    SUM(fact_work_order[service_revenue]),
+    fact_work_order[status] = "Closed"
 )
 
 Open Backlog :=
 CALCULATE(
     COUNTROWS(fact_work_order),
-    fact_work_order[work_order_status] <> "Closed"
+    fact_work_order[status] <> "Closed"
+)
+
+Closed Work Orders :=
+CALCULATE(
+    COUNTROWS(fact_work_order),
+    fact_work_order[status] = "Closed"
 )
 
 Average Days to Close :=
 CALCULATE(
     AVERAGE(fact_work_order[days_open]),
-    fact_work_order[work_order_status] = "Closed"
+    fact_work_order[status] = "Closed"
 )
 
 Parts Fill Rate :=
@@ -23,12 +31,17 @@ DIVIDE(
     SUM(fact_parts_order[qty_requested])
 )
 
-Rental Revenue :=
+Modeled Rental Revenue :=
 SUM(fact_rental_contract[modeled_rental_revenue])
 
--- This is a contract-days approximation, not a daily fleet availability model.
+Rented Asset Days :=
+SUM(fact_fleet_day[is_rented])
+
+Available Asset Days :=
+SUM(fact_fleet_day[is_available])
+
 Fleet Utilization :=
-DIVIDE(
-    SUM(fact_rental_contract[rental_days]),
-    DISTINCTCOUNT(dim_equipment[equipment_id]) * 365
-)
+DIVIDE([Rented Asset Days], [Available Asset Days])
+
+-- Caveat: fact_fleet_day assumes every asset-day is available. Add maintenance,
+-- repair, and out-of-service status before treating this as an operational KPI.

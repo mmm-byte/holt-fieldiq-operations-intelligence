@@ -1,12 +1,13 @@
 {
   "name": "fieldiq-operations-intelligence",
-  "version": "1.0.0",
+  "version": "4.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
@@ -20,5 +21,8 @@
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
