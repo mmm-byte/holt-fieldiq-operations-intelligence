@@ -1,0 +1,34 @@
+-- FIELDIQ semantic measure starter. Assumes the relationships in model-spec.md.
+Service Revenue :=
+CALCULATE(
+    SUM(fact_work_order[labor_revenue]) + SUM(fact_work_order[parts_revenue]),
+    fact_work_order[work_order_status] = "Closed"
+)
+
+Open Backlog :=
+CALCULATE(
+    COUNTROWS(fact_work_order),
+    fact_work_order[work_order_status] <> "Closed"
+)
+
+Average Days to Close :=
+CALCULATE(
+    AVERAGE(fact_work_order[days_open]),
+    fact_work_order[work_order_status] = "Closed"
+)
+
+Parts Fill Rate :=
+DIVIDE(
+    SUM(fact_parts_order[qty_fulfilled]),
+    SUM(fact_parts_order[qty_requested])
+)
+
+Rental Revenue :=
+SUM(fact_rental_contract[modeled_rental_revenue])
+
+-- This is a contract-days approximation, not a daily fleet availability model.
+Fleet Utilization :=
+DIVIDE(
+    SUM(fact_rental_contract[rental_days]),
+    DISTINCTCOUNT(dim_equipment[equipment_id]) * 365
+)
